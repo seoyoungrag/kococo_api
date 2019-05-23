@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - jdk1.8.0_131
+
+branches:
+  only:
+    - master
+
+script: "./mvn clean build"
+
+notifications:
+  email:
+    recipients:
+      - truezure@gmail.com 
