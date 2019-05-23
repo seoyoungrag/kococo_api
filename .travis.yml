@@ -6,7 +6,8 @@ branches:
   only:
     - master
 
-script: "./mvn clean build"
+before_install:
+  - chmod +x mvnw
 
 notifications:
   email:
