@@ -35,7 +35,7 @@ public class RecordRestTest {
     int randomServerPort;
 
     @Test
-    public void testAddEmployeeSuccess() throws URISyntaxException
+    public void testUpdateRecordClaim() throws URISyntaxException
     {
         final String baseUrl = "http://localhost:"+randomServerPort+"/api/record/";
     	//final String baseUrl = "http://localhost:8080/api/record/";
