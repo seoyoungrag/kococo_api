@@ -7,5 +7,4 @@ spring:  profiles: local
     username: kococo
     password: dlfgkwk9!
     initialization-mode: always
-  data:    rest:      base-path: /api  jpa:    show-sql: true
----  spring.profiles: prodspring.profiles.include: real-db
+  data:    rest:      base-path: /api  jpa:    show-sql: true  jackson:    default-property-inclusion: NON_ABSENTmanagement: endpoints:    web:      exposure:        include:          - '*'        ---  spring.profiles: prodspring.profiles.include: real-db
