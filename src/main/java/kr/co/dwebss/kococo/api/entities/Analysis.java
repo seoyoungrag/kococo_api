@@ -1,5 +1,4 @@
 package kr.co.dwebss.kococo.api.entities;
-// Generated 2019. 5. 23 ���� 7:09:58 by Hibernate Tools 4.3.1.Final
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -51,24 +50,24 @@ public class Analysis extends ResourceSupport implements java.io.Serializable {
 	private String claimContents;
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime claimRegistDt;
-	private List<AnalysisDetails> analysisDetailses = new ArrayList<AnalysisDetails>(0);
+	private List<AnalysisDetails> analysisDetailsList = new ArrayList<AnalysisDetails>(0);
 
 	public Analysis() {
 	}
 
 	public Analysis(LocalDateTime analysisStartDt, LocalDateTime analysisEndDt,
-			String analysisFileNm, String analysisFileAppPath, List<AnalysisDetails> analysisDetailses) {
+			String analysisFileNm, String analysisFileAppPath, List<AnalysisDetails> analysisDetailsList) {
 		this.analysisStartDt = analysisStartDt;
 		this.analysisEndDt = analysisEndDt;
 		this.analysisFileNm = analysisFileNm;
 		this.analysisFileAppPath = analysisFileAppPath;
-		this.analysisDetailses = analysisDetailses;
+		this.analysisDetailsList = analysisDetailsList;
 	}
 	
 	public Analysis(Record record, LocalDateTime analysisStartD, LocalDateTime analysisStartDt, LocalDateTime analysisEndD, LocalDateTime analysisEndDt,
 			String analysisFileNm, String analysisFileAppPath, Character analysisServerUploadYn,
 			String analysisServerUploadPath, LocalDateTime analysisServerUploadDt, Character claimYn, Integer claimReasonCd,
-			String claimContents, LocalDateTime claimRegistDt, List<AnalysisDetails> analysisDetailses) {
+			String claimContents, LocalDateTime claimRegistDt, List<AnalysisDetails> analysisDetailsList) {
 		this.record = record;
 		this.analysisStartD = analysisStartD;
 		this.analysisStartDt = analysisStartDt;
@@ -83,7 +82,7 @@ public class Analysis extends ResourceSupport implements java.io.Serializable {
 		this.claimReasonCd = claimReasonCd;
 		this.claimContents = claimContents;
 		this.claimRegistDt = claimRegistDt;
-		this.analysisDetailses = analysisDetailses;
+		this.analysisDetailsList = analysisDetailsList;
 	}
 
 
@@ -234,20 +233,19 @@ public class Analysis extends ResourceSupport implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "analysis")
-	public List<AnalysisDetails> getAnalysisDetailses() {
-		return this.analysisDetailses;
+	public List<AnalysisDetails> getAnalysisDetailsList() {
+		return analysisDetailsList;
 	}
 
-	public void setAnalysisDetailses(List<AnalysisDetails> analysisDetailses) {
-		
-        if (this.analysisDetailses != null) {
-            this.analysisDetailses.forEach(analysisDetails -> analysisDetails.setAnalysis(null));
+	public void setAnalysisDetailsList(List<AnalysisDetails> analysisDetailsList) {
+        if (this.analysisDetailsList != null) {
+            this.analysisDetailsList.forEach(analysisDetails -> analysisDetails.setAnalysis(null));
         }
-        if (analysisDetailses != null) {
-        	analysisDetailses.forEach(analysisDetails -> analysisDetails.setAnalysis(this));
+        if (analysisDetailsList != null) {
+        	analysisDetailsList.forEach(analysisDetails -> analysisDetails.setAnalysis(this));
         }
         
-		this.analysisDetailses = analysisDetailses;
+		this.analysisDetailsList = analysisDetailsList;
 	}
 
 }

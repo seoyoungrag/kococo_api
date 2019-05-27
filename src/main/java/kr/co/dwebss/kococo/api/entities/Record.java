@@ -1,5 +1,4 @@
 package kr.co.dwebss.kococo.api.entities;
-// Generated 2019. 5. 23 ���� 7:09:58 by Hibernate Tools 4.3.1.Final
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -49,23 +48,23 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 	private String consultingReplyContents;
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime consultingReplyRegistDt;
-	private List<Analysis> analysises = new ArrayList<Analysis>(0);
+	private List<Analysis> analysisList = new ArrayList<Analysis>(0);
 
 	public Record() {
 	}
 
-	public Record(Admin admin, String userAppId, LocalDateTime recordStartDt, LocalDateTime recordEndDt, List<Analysis> analysises) {
+	public Record(Admin admin, String userAppId, LocalDateTime recordStartDt, LocalDateTime recordEndDt, List<Analysis> analysisList) {
 		this.admin = admin;
 		this.userAppId = userAppId;
 		this.recordStartDt = recordStartDt;
 		this.recordEndDt = recordEndDt;
-		this.analysises = analysises;
+		this.analysisList = analysisList;
 	}
 	
 	public Record(Admin admin, User user, LocalDateTime recordStartD, LocalDateTime recordStartDt, LocalDateTime recordEndD, LocalDateTime recordEndDt,
 			Character consultingYn, Character consultingReplyYn, String consultingTitle, String consultingContents,
 			LocalDateTime consultingRegistDt, String consultingReplyContents, LocalDateTime consultingReplyRegistDt,
-			List<Analysis> analysises) {
+			List<Analysis> analysisList) {
 		this.admin = admin;
 		this.user = user;
 		this.recordStartD = recordStartD;
@@ -79,7 +78,7 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 		this.consultingRegistDt = consultingRegistDt;
 		this.consultingReplyContents = consultingReplyContents;
 		this.consultingReplyRegistDt = consultingReplyRegistDt;
-		this.analysises = analysises;
+		this.analysisList = analysisList;
 	}
 
 
@@ -230,20 +229,20 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "record")
-	public List<Analysis> getAnalysises() {
-		return this.analysises;
+	public List<Analysis> getAnalysisList() {
+		return analysisList;
 	}
 
-	public void setAnalysises(List<Analysis> analysises) {
+	public void setAnalysisList(List<Analysis> analysisList) {
 		
-        if (this.analysises != null) {
-            this.analysises.forEach(analysis -> analysis.setRecord(null));
+        if (this.analysisList != null) {
+            this.analysisList.forEach(analysis -> analysis.setRecord(null));
         }
-        if (analysises != null) {
-        	analysises.forEach(analysis -> analysis.setRecord(this));
+        if (analysisList != null) {
+        	analysisList.forEach(analysis -> analysis.setRecord(this));
         }
         
-		this.analysises = analysises;
+		this.analysisList = analysisList;
 	}
-
+	
 }

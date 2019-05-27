@@ -51,7 +51,7 @@ public class RecordRestTest {
         Analysis analysis = new Analysis(LocalDateTime.now(), LocalDateTime.now().plusHours(3), LocalDateTime.now()+"_testFileNm.wav","/rec_data/",set2);
         List set = new ArrayList();
         set.add(analysis);
-        Record record = new Record(null, "23e34679-cfa1-49a4-9b07-badffe08235f", LocalDateTime.now(), LocalDateTime.now().plusHours(8), set);
+        Record record = new Record(null, "c0362dd4-97f4-488c-b31c-12cb23b534cf", LocalDateTime.now(), LocalDateTime.now().plusHours(8), set);
 
         ObjectMapper mapper = new ObjectMapper();
         HttpHeaders headers = new HttpHeaders();
@@ -69,15 +69,15 @@ public class RecordRestTest {
         */
         /*
         {
-        	  "userAppId" : "23e34679-cfa1-49a4-9b07-badffe08235f",
+        	  "userAppId" : "c0362dd4-97f4-488c-b31c-12cb23b534cf",
         	  "recordStartDt" : "2019-05-24T12:00:16.614",
         	  "recordEndDt" : "2019-05-24T20:00:16.614",
-        	  "analysises" : [ {
+        	  "analysisList" : [ {
         	    "analysisStartDt" : "2019-05-24T12:00:16.613",
         	    "analysisEndDt" : "2019-05-24T15:00:16.613",
         	    "analysisFileNm" : "2019-05-24T12:00:16.613_testFileNm.wav",
         	    "analysisFileAppPath" : "/rec_data/",
-        	    "analysisDetailses" : [ {
+        	    "analysisDetailsList" : [ {
         	      "termTypeCd" : 200101,
         	      "termStartDt" : "2019-05-24T12:00:26.612",
         	      "termEndDt" : "2019-05-24T12:02:20.613"
