@@ -39,7 +39,7 @@ public class RecordClaimRestTest {
     int randomServerPort;
 
     @Test
-    public void testUpdateRecordClaim() throws URISyntaxException
+    public void testPutRecordForClaim() throws URISyntaxException
     {
         //final String baseUrl = "http://localhost:"+randomServerPort+"/api/analysis/10";
         final String baseUrl = "http://localhost:8080/api/analysis/10";
@@ -69,7 +69,10 @@ public class RecordClaimRestTest {
 			}
     	*/
         ResponseEntity<String> result = this.restTemplate.exchange(baseUrl, HttpMethod.PUT, request, String.class);
-         
+         System.out.println(result.getStatusCodeValue());
+         if(result.getStatusCodeValue()!=200) {
+        	 System.out.println(result.getBody());
+         }
         //Verify request succeed
         assertEquals(200, result.getStatusCodeValue());
     }

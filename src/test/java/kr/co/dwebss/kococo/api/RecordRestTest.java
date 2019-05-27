@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.dwebss.kococo.api.entities.Analysis;
 import kr.co.dwebss.kococo.api.entities.AnalysisDetails;
 import kr.co.dwebss.kococo.api.entities.Record;
+import kr.co.dwebss.kococo.api.entities.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -35,10 +36,10 @@ public class RecordRestTest {
     int randomServerPort;
 
     @Test
-    public void testUpdateRecordClaim() throws URISyntaxException
+    public void testPostRecord() throws URISyntaxException
     {
-        final String baseUrl = "http://localhost:"+randomServerPort+"/api/record/";
-    	//final String baseUrl = "http://localhost:8080/api/record/";
+        //final String baseUrl = "http://localhost:"+randomServerPort+"/api/record/";
+    	final String baseUrl = "http://localhost:8080/api/record/";
         
         URI uri = new URI(baseUrl);
         AnalysisDetails analysisDetails = new AnalysisDetails(200101, LocalDateTime.now().plusSeconds(10), LocalDateTime.now().plusSeconds(124));
@@ -52,7 +53,6 @@ public class RecordRestTest {
         List set = new ArrayList();
         set.add(analysis);
         Record record = new Record(null, "c0362dd4-97f4-488c-b31c-12cb23b534cf", LocalDateTime.now(), LocalDateTime.now().plusHours(8), set);
-
         ObjectMapper mapper = new ObjectMapper();
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-COM-PERSIST", "true");     
@@ -94,6 +94,11 @@ public class RecordRestTest {
         	}
     	*/
         ResponseEntity<String> result = this.restTemplate.postForEntity(uri, request, String.class);
+
+        System.out.println(result.getStatusCodeValue());
+        if(result.getStatusCodeValue()!=200) {
+       	 System.out.println(result.getBody());
+        }
          
         //Verify request succeed
         assertEquals(201, result.getStatusCodeValue());
