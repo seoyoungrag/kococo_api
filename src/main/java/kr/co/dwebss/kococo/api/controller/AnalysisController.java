@@ -39,34 +39,35 @@ public class AnalysisController implements ResourceProcessor<RepositoryLinksReso
         this.entityLinks = entityLinks;
     }
 	
-    @RequestMapping(value="/api/analysis/{id}", method=RequestMethod.PUT, produces = { "application/hal+json" })
-    public Resource<Analysis> putAnalysisClaim(@PathVariable("id") Integer id, @RequestBody Analysis req) {
-    	Optional<Analysis> ori = analysisRepository.findById(id);
-    	if(ori.isPresent() 
-    			&& !Optional.ofNullable(req.getAnalysisServerUploadPath()).orElse("").equals("")
-    			&& Optional.ofNullable(req.getClaimReasonCd()).orElse(0) != 0
-				&& !Optional.ofNullable(req.getClaimContents()).orElse("").equals("")
-    			) {
-    		ori.get().setClaimYn('Y');
-    		ori.get().setClaimRegistDt(LocalDateTime.now());
-    		ori.get().setClaimReasonCd(req.getClaimReasonCd());
-    		ori.get().setClaimContents(req.getClaimContents());
-    		ori.get().setAnalysisServerUploadDt(LocalDateTime.now());
-    		ori.get().setAnalysisServerUploadPath(req.getAnalysisServerUploadPath());
-    		ori.get().setAnalysisServerUploadYn('Y');
-    		
-    		Analysis res = analysisRepository.save(ori.get());
+	@RequestMapping(value = "/api/analysis/{id}", method = RequestMethod.PUT, produces = { "application/hal+json" })
+	public Resource<Analysis> putAnalysisClaim(@PathVariable("id") Integer id, @RequestBody Analysis req) {
+		Optional<Analysis> ori = analysisRepository.findById(id);
+		if (!ori.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, id + "에 해당하는 analysis 데이터가 없음", null);
+		}
+		if (!Optional.ofNullable(req.getAnalysisServerUploadPath()).orElse("").equals("")
+				&& Optional.ofNullable(req.getClaimReasonCd()).orElse(0) != 0
+				&& !Optional.ofNullable(req.getClaimContents()).orElse("").equals("")) {
+			ori.get().setClaimYn('Y');
+			ori.get().setClaimRegistDt(LocalDateTime.now());
+			ori.get().setClaimReasonCd(req.getClaimReasonCd());
+			ori.get().setClaimContents(req.getClaimContents());
+			ori.get().setAnalysisServerUploadDt(LocalDateTime.now());
+			ori.get().setAnalysisServerUploadPath(req.getAnalysisServerUploadPath());
+			ori.get().setAnalysisServerUploadYn('Y');
+
+			Analysis res = analysisRepository.save(ori.get());
 
 			Link selfLink = linkTo(methodOn(AnalysisController.class).getAnalysis(id)).withSelfRel();
 			res.add(selfLink);
-	        Resource<Analysis> resource = new Resource<Analysis>(res);
+			Resource<Analysis> resource = new Resource<Analysis>(res);
 
 			return resource;
-    	}else {
-            throw new ResponseStatusException(
-              HttpStatus.BAD_REQUEST, "analysisServerUploadPath, claimReasonCd, claimContents 중에 값이 없는 게 있음", null);
-    	}
-    }
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"analysisServerUploadPath, claimReasonCd, claimContents 중에 값이 없는 게 있음", null);
+		}
+	}
 
     @RequestMapping(value="/api/analysis/{id}", method=RequestMethod.GET, produces = { "application/hal+json" })
     public Resource<Analysis> getAnalysis(@PathVariable("id") Integer id) {
