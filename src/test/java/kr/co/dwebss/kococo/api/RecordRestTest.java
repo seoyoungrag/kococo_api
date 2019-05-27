@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +15,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import kr.co.dwebss.kococo.api.entities.Analysis;
-import kr.co.dwebss.kococo.api.entities.AnalysisDetails;
 import kr.co.dwebss.kococo.api.entities.Record;
-import kr.co.dwebss.kococo.api.entities.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,7 +30,7 @@ public class RecordRestTest {
     private TestRestTemplate restTemplate;
     @LocalServerPort
     int randomServerPort;
-
+/*
     @Test
     public void testPostRecord() throws URISyntaxException
     {
@@ -56,6 +52,64 @@ public class RecordRestTest {
         ObjectMapper mapper = new ObjectMapper();
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-COM-PERSIST", "true");     
+ 
+        HttpEntity<Record> request = new HttpEntity<>(record, headers);
+        try {
+            String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
+            System.out.println(jsonInString);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }       
+        {
+        	  "userAppId" : "c0362dd4-97f4-488c-b31c-12cb23b534cf",
+        	  "recordStartDt" : "2019-05-24T12:00:16.614",
+        	  "recordEndDt" : "2019-05-24T20:00:16.614",
+        	  "analysisList" : [ {
+        	    "analysisStartDt" : "2019-05-24T12:00:16.613",
+        	    "analysisEndDt" : "2019-05-24T15:00:16.613",
+        	    "analysisFileNm" : "2019-05-24T12:00:16.613_testFileNm.wav",
+        	    "analysisFileAppPath" : "/rec_data/",
+        	    "analysisDetailsList" : [ {
+        	      "termTypeCd" : 200101,
+        	      "termStartDt" : "2019-05-24T12:00:26.612",
+        	      "termEndDt" : "2019-05-24T12:02:20.613"
+        	    }, {
+        	      "termTypeCd" : 200102,
+        	      "termStartDt" : "2019-05-24T12:08:48.613",
+        	      "termEndDt" : "2019-05-24T13:33:48.613"
+        	    }, {
+        	      "termTypeCd" : 200103,
+        	      "termStartDt" : "2019-05-24T14:21:10.613",
+        	      "termEndDt" : "2019-05-24T15:22:40.613"
+        	    } ]
+        	  } ]
+        	}
+        ResponseEntity<String> result = this.restTemplate.postForEntity(uri, request, String.class);
+
+        System.out.println(result.getStatusCodeValue());
+        if(result.getStatusCodeValue()!=200) {
+       	 System.out.println(result.getBody());
+        }
+         
+        //Verify request succeed
+        assertEquals(201, result.getStatusCodeValue());
+    }
+*/
+    @Test
+    public void testPutRecord() throws URISyntaxException
+    {
+        //final String baseUrl = "http://localhost:"+randomServerPort+"/api/record/";
+    	final String baseUrl = "http://localhost:8080/api/record/14";
+        
+        URI uri = new URI(baseUrl);
+        Analysis analysis = new Analysis();
+        analysis.setAnalysisId(11);
+        analysis.setAnalysisServerUploadPath("firebase/upload/");
+        List<Analysis> analysisList = new ArrayList<Analysis>();
+        analysisList.add(analysis);
+        Record record = new Record("컨설팅 제목2","컨설팅 내용2",14,analysisList);
+        HttpHeaders headers = new HttpHeaders();
  
         HttpEntity<Record> request = new HttpEntity<>(record, headers);
         /*
@@ -93,7 +147,7 @@ public class RecordRestTest {
         	  } ]
         	}
     	*/
-        ResponseEntity<String> result = this.restTemplate.postForEntity(uri, request, String.class);
+        ResponseEntity<String> result = this.restTemplate.exchange(baseUrl, HttpMethod.PUT, request, String.class);
 
         System.out.println(result.getStatusCodeValue());
         if(result.getStatusCodeValue()!=200) {
@@ -101,7 +155,6 @@ public class RecordRestTest {
         }
          
         //Verify request succeed
-        assertEquals(201, result.getStatusCodeValue());
+        assertEquals(200, result.getStatusCodeValue());
     }
-    
 }

@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -171,11 +172,20 @@ public class Analysis extends ResourceSupport implements java.io.Serializable {
 
 	@Column(name = "ANALYSIS_SERVER_UPLOAD_YN", length = 1)
 	public Character getAnalysisServerUploadYn() {
-		return this.analysisServerUploadYn;
+		if(!Optional.ofNullable(this.analysisServerUploadPath).orElse("").equals("")) {
+			return 'Y';
+		}else {
+			return this.analysisServerUploadYn;
+		}
+		
 	}
 
 	public void setAnalysisServerUploadYn(Character analysisServerUploadYn) {
-		this.analysisServerUploadYn = analysisServerUploadYn;
+		if(!Optional.ofNullable(this.analysisServerUploadPath).orElse("").equals("")) {
+			this.analysisServerUploadYn = 'Y';
+		}else {
+			this.analysisServerUploadYn = analysisServerUploadYn;
+		}
 	}
 
 	@Column(name = "ANALYSIS_SERVER_UPLOAD_PATH")

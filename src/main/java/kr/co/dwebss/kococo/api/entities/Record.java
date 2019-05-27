@@ -82,6 +82,13 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 	}
 
 
+	public Record(String consultingTitle, String consultingContents, int recordId, List<Analysis> analysisList) {
+		this.recordId = recordId;
+		this.consultingTitle = consultingTitle;
+		this.consultingContents = consultingContents;
+		this.analysisList = analysisList;
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
@@ -203,11 +210,19 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 
 	@Column(name = "CONSULTING_REGIST_DT", length = 19)
 	public LocalDateTime getConsultingRegistDt() {
-		return this.consultingRegistDt;
+		if(this.consultingRegistDt == null && this.consultingTitle != null && this.consultingContents!=null) {
+			return LocalDateTime.now();
+		}else {
+			return this.consultingRegistDt;
+		}
 	}
 
 	public void setConsultingRegistDt(LocalDateTime consultingRegistDt) {
-		this.consultingRegistDt = consultingRegistDt;
+		if(this.consultingRegistDt == null && this.consultingTitle != null && this.consultingContents!=null) {
+			this.consultingRegistDt = LocalDateTime.now();
+		}else {
+			this.consultingRegistDt = consultingRegistDt;
+		}
 	}
 
 	@Column(name = "CONSULTING_REPLY_CONTENTS", length = 250)
@@ -230,7 +245,7 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "record")
 	public List<Analysis> getAnalysisList() {
-		return analysisList;
+		return this.analysisList;
 	}
 
 	public void setAnalysisList(List<Analysis> analysisList) {
