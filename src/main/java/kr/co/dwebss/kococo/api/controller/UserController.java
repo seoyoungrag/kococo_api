@@ -34,7 +34,7 @@ public class UserController implements ResourceProcessor<RepositoryLinksResource
         this.entityLinks = entityLinks;
     }
 	
-    @RequestMapping(value="/api/userappid", method=RequestMethod.GET, produces = { "application/hal+json" })
+    @RequestMapping(value="/api/userappid", method=RequestMethod.POST, produces = { "application/hal+json" })
     public Resource<User> getUserAppId() {
     	UUID id = UUID.randomUUID();
 		int cnt = 0;
