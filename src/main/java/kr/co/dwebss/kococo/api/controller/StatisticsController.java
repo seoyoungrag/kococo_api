@@ -126,6 +126,9 @@ public class StatisticsController implements ResourceProcessor<RepositoryLinksRe
 		resource.add(ControllerLinkBuilder
 				.linkTo(ControllerLinkBuilder.methodOn(StatisticsController.class).getStatistics(null, null))
 				.withRel("statistics"));
+		resource.add(ControllerLinkBuilder
+				.linkTo(ControllerLinkBuilder.methodOn(StatisticsController.class).getStatisticsForRecord(null, null))
+				.withRel("statistics/record"));
 		return resource;
 	}
 
