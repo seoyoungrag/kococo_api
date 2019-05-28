@@ -2,6 +2,7 @@ package kr.co.dwebss.kococo.api.entities;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +32,12 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 	private Integer recordId;
 	private Admin admin;
 	private User user;
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private LocalDateTime recordStartD;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'")
+	private LocalDate recordStartD;
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime recordStartDt;
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private LocalDateTime recordEndD;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'")
+	private LocalDate recordEndD;
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime recordEndDt;
 	private Character consultingYn='N';
@@ -61,7 +62,7 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 		this.analysisList = analysisList;
 	}
 	
-	public Record(Admin admin, User user, LocalDateTime recordStartD, LocalDateTime recordStartDt, LocalDateTime recordEndD, LocalDateTime recordEndDt,
+	public Record(Admin admin, User user, LocalDate recordStartD, LocalDateTime recordStartDt, LocalDate recordEndD, LocalDateTime recordEndDt,
 			Character consultingYn, Character consultingReplyYn, String consultingTitle, String consultingContents,
 			LocalDateTime consultingRegistDt, String consultingReplyContents, LocalDateTime consultingReplyRegistDt,
 			List<Analysis> analysisList) {
@@ -131,14 +132,14 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 	}
 
 	@Column(name = "RECORD_START_D", length = 10)
-	public LocalDateTime getRecordStartD() {
+	public LocalDate getRecordStartD() {
 		if(this.recordStartD==null&&this.recordStartDt!=null) {
-			this.recordStartD = this.recordStartDt;
+			this.recordStartD = this.recordStartDt.toLocalDate();
 		}
 		return this.recordStartD;
 	}
 
-	public void setRecordStartD(LocalDateTime recordStartD) {
+	public void setRecordStartD(LocalDate recordStartD) {
 		this.recordStartD = recordStartD;
 	}
 
@@ -152,14 +153,14 @@ public class Record extends ResourceSupport implements java.io.Serializable {
 	}
 
 	@Column(name = "RECORD_END_D", length = 10)
-	public LocalDateTime getRecordEndD() {
+	public LocalDate getRecordEndD() {
 		if(this.recordEndD==null&&this.recordEndDt!=null) {
-			this.recordEndD = this.recordEndDt;
+			this.recordEndD = this.recordEndDt.toLocalDate();
 		}
 		return this.recordEndD;
 	}
 
-	public void setRecordEndD(LocalDateTime recordEndD) {
+	public void setRecordEndD(LocalDate recordEndD) {
 		this.recordEndD = recordEndD;
 	}
 
