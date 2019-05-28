@@ -17,6 +17,7 @@ import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,7 +77,27 @@ public class UserController implements ResourceProcessor<RepositoryLinksResource
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, id + "에 해당하는 user 데이터가 없음, userId="+id, null);
 			}
     }
-    
+
+    @RequestMapping(value="/api/userappid/{id}", method=RequestMethod.PUT, produces = { "application/hal+json" })
+    public Resource<User> putUserAppId(@PathVariable("id") String id, @RequestBody User req) {
+    	if(Optional.ofNullable(id).orElse("").equals("")) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, id + "userId는 필수 값임", null);
+    	}
+    	Optional<User> user = userRepository.findById(id);
+			if (user.isPresent()) {
+				user.get().setUserGender(Optional.ofNullable(req.getUserGender()).orElse(user.get().getUserGender()));
+				user.get().setUserHeight(Optional.ofNullable(req.getUserHeight()).orElse(user.get().getUserHeight()));
+				user.get().setUserAge(Optional.ofNullable(req.getUserAge()).orElse(user.get().getUserAge()));
+				user.get().setUserWeight(Optional.ofNullable(req.getUserWeight()).orElse(user.get().getUserWeight()));
+				User savendUser = userRepository.save(user.get());
+		        Resource<User> resource = new Resource<User>(savendUser);
+				Link selfLink = entityLinks.linkToSingleResource(User.class, id);
+		        resource.add(selfLink);
+				return resource;
+			} else {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, id + "에 해당하는 user 데이터가 없음, userId="+id, null);
+			}
+    }
 	@Override
 	public RepositoryLinksResource process(RepositoryLinksResource resource) {
 	    resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(UserController.class).getUserAppId(null)).withRel("userappid"));
