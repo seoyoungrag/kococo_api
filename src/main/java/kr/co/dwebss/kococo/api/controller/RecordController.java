@@ -44,7 +44,7 @@ public class RecordController implements ResourceProcessor<RepositoryLinksResour
         this.entityLinks = entityLinks;
     }
 	
-	@RequestMapping(value = "/api/record/{id}", method = RequestMethod.PUT, produces = { "application/hal+json" })
+	@RequestMapping(value = "/api/record/consulting/{id}", method = RequestMethod.PUT, produces = { "application/hal+json" })
 	public Resource<Record> putRecord(@PathVariable("id") Integer id, @RequestBody Record req) {
 		Optional<Record> ori = recordRepository.findById(id);
 		if (!ori.isPresent()) {
@@ -88,7 +88,7 @@ public class RecordController implements ResourceProcessor<RepositoryLinksResour
 		}
 	}
 
-    @RequestMapping(value="/api/record/{id}", method=RequestMethod.GET, produces = { "application/hal+json" })
+    @RequestMapping(value="/api/record/search/findByRecordId/{id}", method=RequestMethod.GET, produces = { "application/hal+json" })
     public Resource<Record> getRecord(@PathVariable("id") Integer id) {
     	Optional<Record> ori = recordRepository.findById(id);
     	if(ori.isPresent()) {
