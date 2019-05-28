@@ -1,5 +1,4 @@
 package kr.co.dwebss.kococo.api.entities;
-// Generated 2019. 5. 23 ���� 7:09:58 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +17,7 @@ public class Code extends ResourceSupport implements java.io.Serializable {
 	private int code;
 	private String codeCateogry;
 	private String codeValue;
+	private String codeDisplayValue;
 
 	public Code() {
 	}
@@ -26,10 +26,13 @@ public class Code extends ResourceSupport implements java.io.Serializable {
 		this.code = code;
 	}
 
-	public Code(int code, String codeCateogry, String codeValue) {
+
+	public Code(int code, String codeCateogry, String codeValue, String codeDisplayValue) {
+		super();
 		this.code = code;
 		this.codeCateogry = codeCateogry;
 		this.codeValue = codeValue;
+		this.codeDisplayValue = codeDisplayValue;
 	}
 
 	@Id
@@ -59,6 +62,15 @@ public class Code extends ResourceSupport implements java.io.Serializable {
 
 	public void setCodeValue(String codeValue) {
 		this.codeValue = codeValue;
+	}
+
+	@Column(name = "CODE_DISPLAY_VALUE", length = 30)
+	public String getCodeDisplayValue() {
+		return codeDisplayValue;
+	}
+
+	public void setCodeDisplayValue(String codeDisplayValue) {
+		this.codeDisplayValue = codeDisplayValue;
 	}
 
 }
