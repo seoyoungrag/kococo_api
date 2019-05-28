@@ -99,8 +99,8 @@ public class RecordRestTest {
     @Test
     public void testPutRecord() throws URISyntaxException
     {
-        //final String baseUrl = "http://localhost:"+randomServerPort+"/api/record/";
-    	final String baseUrl = "http://localhost:8080/api/record/14";
+        //final String baseUrl = "http://localhost:"+randomServerPort+"/api/record/complete";
+    	final String baseUrl = "http://localhost:8080/api/record/consulting/14";
         
         URI uri = new URI(baseUrl);
         Analysis analysis = new Analysis();
