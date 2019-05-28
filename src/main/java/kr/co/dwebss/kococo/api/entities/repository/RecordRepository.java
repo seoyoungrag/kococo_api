@@ -1,5 +1,6 @@
 package kr.co.dwebss.kococo.api.entities.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,5 +11,9 @@ import kr.co.dwebss.kococo.api.entities.Record;
 
 @RepositoryRestResource(collectionResourceRel = "record", path = "record")
 public interface RecordRepository extends JpaRepository<Record,Integer>{
-    List findByUserAppId(@Param("userAppId") String userAppId);
+    List<Record> findByUserAppId(@Param("userAppId") String userAppId);
+    List<Record> findByUserAppIdAndRecordStartDBetween(
+    		@Param("userAppId") String userAppId, 
+    		@Param("startD")LocalDate startD, 
+    		@Param("endD")LocalDate endD);
 }
