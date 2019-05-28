@@ -13,3 +13,5 @@ notifications:
   email:
     recipients:
       - truezure@gmail.com 
+script:
+ - echo "skipping tests"
